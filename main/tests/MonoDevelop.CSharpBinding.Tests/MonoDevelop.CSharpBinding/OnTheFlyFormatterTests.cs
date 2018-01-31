@@ -124,7 +124,6 @@ namespace MonoDevelop.CSharpBinding
 			content.Contents.Add (compExt);
 			
 			var ext = new CSharpTextEditorIndentation ();
-			CSharpTextEditorIndentation.OnTheFlyFormatting = true;
 			ext.Initialize (doc.Editor, doc);
 			content.Contents.Add (ext);
 			
@@ -138,6 +137,7 @@ namespace MonoDevelop.CSharpBinding
 			}
 		}
 
+		[Ignore]
 		[Test]
 		public async Task TestSemicolon ()
 		{
@@ -161,6 +161,7 @@ namespace MonoDevelop.CSharpBinding
 			});
 		}
 
+		[Ignore]
 		[Test]
 		public async Task TestCloseBrace ()
 		{
@@ -186,6 +187,7 @@ namespace MonoDevelop.CSharpBinding
 
 		}
 
+		[Ignore]
 		[Test]
 		public async Task TestCloseBraceIf ()
 		{
@@ -218,6 +220,7 @@ namespace MonoDevelop.CSharpBinding
 			});
 		}
 
+		[Ignore]
 		[Test]
 		public async Task TestCloseBraceCatch ()
 		{
@@ -381,6 +384,7 @@ class Foo
 			});
 		}
 
+		[Ignore]
 		[Test]
 		public async Task TestBug16174_VirtualIndent ()
 		{
@@ -451,6 +455,7 @@ namespace FormatSelectionTest
 			});
 		}
 
+		[Ignore]
 		[Test]
 		public async Task TestAfterCommentLine ()
 		{
@@ -480,6 +485,7 @@ namespace FormatSelectionTest
 		}
 
 		// Bug 44747 - Automatic indentation of preprocessor directives is not consistent
+		[Ignore]
 		[Test]
 		public async Task TestBug44747 ()
 		{
@@ -506,6 +512,7 @@ namespace FormatSelectionTest
 			});
 		}
 
+		[Ignore]
 		[Test]
 		public async Task TestBug44747_regions ()
 		{
@@ -557,6 +564,8 @@ namespace FormatSelectionTest
 		}
 
 		// Bug 44747 - Automatic indentation of preprocessor directives is not consistent
+
+		[Ignore]
 		[Test]
 		public async Task TestBug17902 ()
 		{
@@ -616,6 +625,8 @@ namespace FormatSelectionTest
 		/// <summary>
 		/// Bug 46817 - Xamarin Studio hides characters in auto format
 		/// </summary>
+
+		[Ignore]
 		[Test]
 		public async Task TestBug46817 ()
 		{
