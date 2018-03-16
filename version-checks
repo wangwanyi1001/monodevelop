@@ -17,7 +17,7 @@ DEP[0]=md-addins
 DEP_NAME[0]=MDADDINS
 DEP_PATH[0]=${top_srcdir}/../md-addins
 DEP_MODULE[0]=git@github.com:xamarin/md-addins.git
-DEP_NEEDED_VERSION[0]=c9fedc1938a00a38241142bc4da45c642e3ff77b
+DEP_NEEDED_VERSION[0]=e4239c16e7a17a4d659805fff879416dcb7a4fcc
 DEP_BRANCH_AND_REMOTE[0]="d15-7-telemetry-bump-nuget origin/d15-7-telemetry-bump-nuget"
 
 # heap-shot
