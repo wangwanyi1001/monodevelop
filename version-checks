@@ -17,7 +17,7 @@ DEP[0]=md-addins
 DEP_NAME[0]=MDADDINS
 DEP_PATH[0]=${top_srcdir}/../md-addins
 DEP_MODULE[0]=git@github.com:xamarin/md-addins.git
-DEP_NEEDED_VERSION[0]=571f70fd1e42d7752b8ceae0c29640710867cc92
+DEP_NEEDED_VERSION[0]=ddeaed83f490c58a918429c15ce45d4b33e04047
 DEP_BRANCH_AND_REMOTE[0]="vsts-fix-androidtests origin/vsts-fix-androidtests"
 
 # heap-shot
