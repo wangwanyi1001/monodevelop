@@ -59,7 +59,7 @@ namespace MonoDevelop.Components
 
 		internal static bool AccessibilityEnabled { get; private set; }
 
-		[System.Runtime.InteropServices.DllImport ("__Internal")]
+		[System.Runtime.InteropServices.DllImport ("libvsmregistrar.dylib")]
 		private static extern void xamarin_create_classes ();
 
 		internal static void InitializeGtk (string progname, ref string[] args)
@@ -78,12 +78,18 @@ namespace MonoDevelop.Components
 			if (ObjCRuntime.Dlfcn.dlopen (Path.Combine (dir, "libxammac.dylib"), 0) == IntPtr.Zero)
 				LoggingService.LogFatalError ("Unable to load libxammac");
 
-			if (ObjCRuntime.Dlfcn.dlopen (Path.Combine (dir, "libvsmregistrar.dylib"), 0) != IntPtr.Zero) {
-				xamarin_create_classes ();
-				LoggingService.LogInfo ("Static registrar initialized");
-			} else {
-				LoggingService.LogInfo ("Static registrar not found");
-				string err = ObjCRuntime.Dlfcn.dlerror ();
+			if (ObjCRuntime.Dlfcn.dlopen ("/System/Library/Frameworks/WebKit.framework/Versions/A/WebKit", 0) == IntPtr.Zero)
+				LoggingService.LogFatalError ("Unable to load webkit");
+
+			string registrarPath = Path.Combine (dir, "libvsmregistrar.dylib");
+			if (File.Exists (registrarPath)) {
+				if (ObjCRuntime.Dlfcn.dlopen (registrarPath, 0) != IntPtr.Zero) {
+					xamarin_create_classes ();
+					LoggingService.LogInfo ("Static registrar initialized");
+				} else {
+					string err = ObjCRuntime.Dlfcn.dlerror ();
+					LoggingService.LogInfo ("Static registrar not found {0}", err);
+				}
 			}
 			
 			// Early init Cocoa through xwt
