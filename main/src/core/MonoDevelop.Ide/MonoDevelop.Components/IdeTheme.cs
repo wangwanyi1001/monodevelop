@@ -59,8 +59,7 @@ namespace MonoDevelop.Components
 
 		internal static bool AccessibilityEnabled { get; private set; }
 
-		[System.Runtime.InteropServices.DllImport ("libvsmregistrar.dylib")]
-		private static extern void xamarin_create_classes ();
+		delegate void CreateClassesDelegate ();
 
 		internal static void InitializeGtk (string progname, ref string[] args)
 		{
@@ -83,8 +82,13 @@ namespace MonoDevelop.Components
 
 			string registrarPath = Path.Combine (dir, "libvsmregistrar.dylib");
 			if (File.Exists (registrarPath)) {
-				if (ObjCRuntime.Dlfcn.dlopen (registrarPath, 0) != IntPtr.Zero) {
+				var registrarLib = ObjCRuntime.Dlfcn.dlopen (registrarPath, 0);
+				if (registrarLib != IntPtr.Zero) {
+					var createClassesPtr = ObjCRuntime.Dlfcn.dlsym (registrarLib, "xamarin_create_classes");
+
+					var xamarin_create_classes = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<CreateClassesDelegate> (createClassesPtr);
 					xamarin_create_classes ();
+
 					LoggingService.LogInfo ("Static registrar initialized");
 				} else {
 					string err = ObjCRuntime.Dlfcn.dlerror ();
