@@ -59,6 +59,9 @@ namespace MonoDevelop.Components
 
 		internal static bool AccessibilityEnabled { get; private set; }
 
+		[System.Runtime.InteropServices.DllImport ("__Internal")]
+		private static extern void xamarin_create_classes ();
+
 		internal static void InitializeGtk (string progname, ref string[] args)
 		{
 			if (Gtk.Settings.Default != null)
@@ -70,6 +73,19 @@ namespace MonoDevelop.Components
 				UpdateGtkTheme ();
 
 #if MAC
+			var dir = Path.GetDirectoryName (typeof (IdeTheme).Assembly.Location);
+
+			if (ObjCRuntime.Dlfcn.dlopen (Path.Combine (dir, "libxammac.dylib"), 0) == IntPtr.Zero)
+				LoggingService.LogFatalError ("Unable to load libxammac");
+
+			if (ObjCRuntime.Dlfcn.dlopen (Path.Combine (dir, "libvsmregistrar.dylib"), 0) != IntPtr.Zero) {
+				xamarin_create_classes ();
+				LoggingService.LogInfo ("Static registrar initialized");
+			} else {
+				LoggingService.LogInfo ("Static registrar not found");
+				string err = ObjCRuntime.Dlfcn.dlerror ();
+			}
+			
 			// Early init Cocoa through xwt
 			var path = Path.GetDirectoryName (typeof (IdeTheme).Assembly.Location);
 			System.Reflection.Assembly.LoadFrom (Path.Combine (path, "Xwt.XamMac.dll"));
