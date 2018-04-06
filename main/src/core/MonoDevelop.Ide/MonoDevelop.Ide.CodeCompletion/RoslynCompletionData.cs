@@ -40,11 +40,14 @@ using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui;
 using Microsoft.VisualStudio.Platform;
 using Microsoft.VisualStudio.Text;
+using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
+using Microsoft.CodeAnalysis.Shared.Extensions;
 using MonoDevelop.Ide.CodeTemplates;
 using System.Linq;
 using System.Text;
 using MonoDevelop.Ide.Editor.Highlighting;
 using MonoDevelop.Ide.Fonts;
+using Microsoft.CodeAnalysis.Editor;
 
 namespace MonoDevelop.Ide.CodeCompletion
 {
@@ -267,13 +270,22 @@ namespace MonoDevelop.Ide.CodeCompletion
 					editor.CaretOffset = completionChange.NewPosition.Value;
 
 				if (CompletionItem.Rules.FormatOnCommit) {
-					var endOffset = mappedSpan.Start.Position + completionChange.TextChange.NewText.Length;
-					Format (editor, document, mappedSpan.Start, endOffset);
+					var spanToFormat = triggerSnapshotSpan.TranslateTo (currentBuffer.CurrentSnapshot, SpanTrackingMode.EdgeInclusive);
+					var formattingService = document.AnalysisDocument.GetLanguageService<IEditorFormattingService> ();
+
+					if (formattingService != null) {
+						var changes = formattingService.GetFormattingChangesAsync (document.AnalysisDocument, spanToFormat.Span.ToTextSpan (), CancellationToken.None).WaitAndGetResult (CancellationToken.None);
+						editor.ApplyTextChanges (changes);
+					}
 				}
 			}
 		}
 
-		protected abstract void Format (TextEditor editor, Gui.Document document, int start, int end);
+		[Obsolete("Not longer used - formatting is now done with roslyn directly.")]
+		protected virtual void Format (TextEditor editor, Gui.Document document, int start, int end)
+		{
+			
+		}
 
 		public override Task<TooltipInformation> CreateTooltipInformation (bool smartWrap, CancellationToken cancelToken)
 		{
