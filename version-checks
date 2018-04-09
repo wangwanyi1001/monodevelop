@@ -17,8 +17,8 @@ DEP[0]=md-addins
 DEP_NAME[0]=MDADDINS
 DEP_PATH[0]=${top_srcdir}/../md-addins
 DEP_MODULE[0]=git@github.com:xamarin/md-addins.git
-DEP_NEEDED_VERSION[0]=1bb2b495a5d4a2b95a5854c6985a74d3c42ea8b3
-DEP_BRANCH_AND_REMOTE[0]="master origin/master"
+DEP_NEEDED_VERSION[0]=696440e232f32153c160224c334398bd3786dc55
+DEP_BRANCH_AND_REMOTE[0]="add-nps-survey origin/add-nps-survey"
 
 # heap-shot
 DEP[1]=heap-shot
