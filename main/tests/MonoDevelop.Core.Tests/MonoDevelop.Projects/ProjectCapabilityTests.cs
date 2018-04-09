@@ -55,7 +55,7 @@ namespace MonoDevelop.Projects
 			string testAddinBuildPath = Path.Combine (thisDir, "MonoDevelop.Core.Tests.Addin.dll");
 			testAddinAssemblyPath = Path.Combine (AddinManager.Registry.DefaultAddinsFolder, "MonoDevelop.Core.Tests.Addin.dll");
 			File.Copy (testAddinBuildPath, testAddinAssemblyPath);
-			AddinManager.Registry.Update (null);
+			AddinManager.Registry.Update (new ConsoleProgressStatus (true));
 		}
 	
 		[TestFixtureTearDown]
@@ -65,7 +65,7 @@ namespace MonoDevelop.Projects
 
 			// Unregister test addin.
 			File.Delete (testAddinAssemblyPath);
-			AddinManager.Registry.Update (null);
+			AddinManager.Registry.Update (new ConsoleProgressStatus (true));
 		}
 
 		List<string> defaultCapabilities;
