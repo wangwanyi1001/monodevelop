@@ -380,6 +380,8 @@
     <Compile Include="Gui\MonoDevelop.CSharp.Formatting.NewFormattingProfileDialog.cs" />
     <Compile Include="Gui\MonoDevelop.CSharp.Project.CodeGenerationPanelWidget.cs" />
     <Compile Include="Gui\MonoDevelop.CSharp.Project.CompilerOptionsPanelWidget.cs" />
+    <Compile Include="MonoDevelop.CSharp.BraceCompletion\BraceCompletionSessionProvider.cs" />
+    <Compile Include="MonoDevelop.CSharp.BraceCompletion\BraceCompletionSessionProvider.BraceCompletionSession.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile.am" />
@@ -402,6 +404,7 @@
   <ItemGroup>
     <Folder Include="MonoDevelop.Ide.Completion.Presentation\" />
     <Folder Include="Gui\" />
+    <Folder Include="MonoDevelop.CSharp.BraceCompletion\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
  </Project>
